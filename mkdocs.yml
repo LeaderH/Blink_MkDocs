@@ -1,0 +1,6 @@
+site_name: BLINK
+site_url: https://docs.blink.com/
+nav:
+    - Home: index.md
+    - About: about.md
+theme: readthedocs
