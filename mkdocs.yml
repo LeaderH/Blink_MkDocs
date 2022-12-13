@@ -1,6 +1,15 @@
 site_name: BLINK
 site_url: https://docs.blink.com/
 nav:
-    - Home: index.md
-    - About: about.md
+    - Home: 
+        - About: index.md
+        - Installation: installation.md
+        - Usage: usage.md
+    - API:
+        - Apkinfo: apkinfo.md
 theme: readthedocs
+
+markdown_extensions:
+    - toc:
+        permalink: "#"
+
