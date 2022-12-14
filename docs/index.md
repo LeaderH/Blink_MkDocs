@@ -10,15 +10,15 @@ You can kown more about BLINK with how to [install](installation.md) and [manipu
 ### BLINK workflow
 BLINK consists of two major processing modules, a metaobject(Apkinfo), and numerous customizable detecting rules(Detectors).
 
-![圖片](img/BLINK_workflow.png "BLINK workflow")
+![img](img/BLINK_workflow.png "BLINK workflow")
 #### Decompiling module
 Leveraging slightly modified [Androgurad](https://github.com/androguard/androguard) core, BLINK decompiles and extracts every interesting resources within an APK and maps each resource into individual python objects.  
 BLINK also further analyze and maintain every caller-callee, field read-field write relationships with cross reference entries, which is crucial for later needs of dataflow analysis.  
 
-![圖片](img/Decompile%20module%20overview.png "Decompiling module")
+![img](img/Decompile%20module%20overview.png "Decompiling module")
 #### Analyzing module
 A RuleManager is responsible for govening the availability of the Detectors as well as loading them in order into analyzing module.  
 Detectors access resource or information in target APK via implementing corresponding ScannerInterfaces.  
 By following Request, Callback, Report design patterns, BLINK can accommodate various workflow without any risk of confliction.
 
-![圖片](img/Analyzing%20Module%20overview.png "Analyzing module")
+![img](img/Analyzing%20Module%20overview.png "Analyzing module")

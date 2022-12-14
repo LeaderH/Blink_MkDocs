@@ -7,9 +7,15 @@ nav:
         - Usage: usage.md
     - API:
         - Apkinfo: apkinfo.md
+        - Scanner: scanner.md
+        - Detector: detector.md
 theme: readthedocs
 
 markdown_extensions:
     - toc:
         permalink: "#"
-
+    - pymdownx.highlight:
+        anchor_linenums: true
+    - pymdownx.inlinehilite
+    - pymdownx.snippets
+    - pymdownx.superfences
