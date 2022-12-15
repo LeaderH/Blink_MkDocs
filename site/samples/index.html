@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.blink.com/samples/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Analysis Scenarios - BLINK</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Analysis Scenarios";
+        var mkdocs_page_input_path = "samples.md";
+        var mkdocs_page_url = "/samples/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> BLINK
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Home</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="..">About</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../usage/">Usage</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="../apkinfo/">Apkinfo</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scanner/">Scanner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../detector/">Detector</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Analysis Scenarios</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#analyzing-method-calls">Analyzing Method Calls</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#analyzing-field-references">Analyzing field references</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#analyzing-xml-contents">Analyzing xml contents</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#analyzing-resource-arsc-contents">Analyzing resource (ARSC) contents</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#analyzing-other-files-contents">Analyzing Other Files contents</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">BLINK</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>API &raquo;</li>
+      <li>Analysis Scenarios</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="sample-analysis-scenarios">Sample Analysis Scenarios<a class="headerlink" href="#sample-analysis-scenarios" title="Permanent link">#</a></h1>
+<p>Here we are going to introduce few frequently encountered analysis scenarios, and demonstrate how one can tackle them leveraging BLINK APIs with some examples. </p>
+<h2 id="analyzing-method-calls">Analyzing Method Calls<a class="headerlink" href="#analyzing-method-calls" title="Permanent link">#</a></h2>
+<p>In AllowAllHostnameVerifierDetector, we tries to detect if there is an usage of <code>AllowAllHostnameVerifier()</code> class or <code>SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER</code> field as <code>setHostnameVerifier</code>'s argument.</p>
+<p>The targets in java would be like:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">URL</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">URL</span><span class="p">(</span><span class="s">&quot;https://www.google.com&quot;</span><span class="p">);</span><span class="w"></span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">HttpsURLConnection</span><span class="w"> </span><span class="n">connection</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">HttpsURLConnection</span><span class="p">)</span><span class="w"> </span><span class="n">url</span><span class="p">.</span><span class="na">openConnection</span><span class="p">();</span><span class="w"></span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">connection</span><span class="p">.</span><span class="na">setHostnameVerifier</span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">AllowAllHostnameVerifier</span><span class="p">());</span><span class="w"></span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">connection</span><span class="p">.</span><span class="na">setHostnameVerifier</span><span class="p">(</span><span class="n">SSLSocketFactory</span><span class="p">.</span><span class="na">ALLOW_ALL_HOSTNAME_VERIFIER</span><span class="p">);</span><span class="w"></span>
+</code></pre></div>
+<p>The corresponding detecting workflows include:</p>
+<ol>
+<li>query constructor with the name via <code>getApplicableConstructorTypes()</code></li>
+<li>implement <code>visitConstructor()</code> callback method an report the issue</li>
+<li>query target methods with their name via <code>getApplicableMethodNames()</code></li>
+<li>implement <code>visitMethodCall()</code>, conduct analysis and report the issue</li>
+</ol>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">AllowAllHostnameVerifierDetector.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span>
+<span class="normal"><a href="#__codelineno-1-45">45</a></span>
+<span class="normal"><a href="#__codelineno-1-46">46</a></span>
+<span class="normal"><a href="#__codelineno-1-47">47</a></span>
+<span class="normal"><a href="#__codelineno-1-48">48</a></span>
+<span class="normal"><a href="#__codelineno-1-49">49</a></span>
+<span class="normal"><a href="#__codelineno-1-50">50</a></span>
+<span class="normal"><a href="#__codelineno-1-51">51</a></span>
+<span class="normal"><a href="#__codelineno-1-52">52</a></span>
+<span class="normal"><a href="#__codelineno-1-53">53</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-1-28" name="__codelineno-1-28"></a><span class="nd">@overrides</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29"></a><span class="k">def</span> <span class="nf">getApplicableConstructorTypes</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30"></a>    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;org.apache.http.conn.ssl.AllowAllHostnameVerifier&quot;</span><span class="p">]</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31"></a>
+<a id="__codelineno-1-32" name="__codelineno-1-32"></a><span class="nd">@overrides</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33"></a><span class="k">def</span> <span class="nf">visitConstructor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">constructor</span><span class="p">):</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34"></a>    <span class="n">context</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ISSUE</span><span class="p">,</span> <span class="n">constructor</span><span class="p">,</span> <span class="n">constructor</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="s2">&quot;Using the `AllowAllHostnameVerifier` HostnameVerifier is unsafe &quot;</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35"></a>                    <span class="o">+</span> <span class="s2">&quot;because it always returns true, which could cause insecure network &quot;</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36"></a>                    <span class="o">+</span> <span class="s2">&quot;traffic due to trusting TLS/SSL server certificates for wrong &quot;</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37"></a>                    <span class="o">+</span> <span class="s2">&quot;hostnames&quot;</span><span class="p">)</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38"></a>
+<a id="__codelineno-1-39" name="__codelineno-1-39"></a><span class="nd">@overrides</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40"></a><span class="k">def</span> <span class="nf">getApplicableMethodNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41"></a>    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;setHostnameVerifier&quot;</span><span class="p">,</span> <span class="s2">&quot;setDefaultHostnameVerifier&quot;</span><span class="p">]</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42"></a>
+<a id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="nd">@overrides</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44"></a><span class="k">def</span> <span class="nf">visitMethodCall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45"></a>    <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">methodMatches</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;javax.net.ssl.HostnameVerifier&quot;</span><span class="p">):</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46"></a>        <span class="n">arg</span> <span class="o">=</span> <span class="n">method</span><span class="o">.</span><span class="n">get_argument</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<a id="__codelineno-1-47" name="__codelineno-1-47"></a>        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">ArgType</span><span class="o">.</span><span class="n">Field</span><span class="p">)</span> <span class="ow">and</span> <span class="n">arg</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;ALLOW_ALL_HOSTNAME_VERIFIER&quot;</span><span class="p">:</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48"></a>            <span class="n">message</span> <span class="o">=</span> <span class="s2">&quot;Using the `ALLOW_ALL_HOSTNAME_VERIFIER` HostnameVerifier &quot;</span>\
+<a id="__codelineno-1-49" name="__codelineno-1-49"></a>                <span class="o">+</span> <span class="s2">&quot;is unsafe because it always returns true, which could cause &quot;</span>\
+<a id="__codelineno-1-50" name="__codelineno-1-50"></a>                <span class="o">+</span> <span class="s2">&quot;insecure network traffic due to trusting TLS/SSL server &quot;</span>\
+<a id="__codelineno-1-51" name="__codelineno-1-51"></a>                <span class="o">+</span> <span class="s2">&quot;certificates for wrong hostnames&quot;</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52"></a>            <span class="n">context</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ISSUE</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">method</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53"></a>            <span class="k">return</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="analyzing-field-references">Analyzing field references<a class="headerlink" href="#analyzing-field-references" title="Permanent link">#</a></h2>
+<p>One can look for field reference of its name with <code>getApplicableReferenceNames()</code> and handle the return FieldObject within <code>visitReferenceRead()</code> or <code>visitReferenceWrite()</code>.</p>
+<p>Here we have an example looking for usage of field <code>android.os.Build.SERIAL</code></p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HardwareIdDetector.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-45">45</a></span>
+<span class="normal"><a href="#__codelineno-2-46">46</a></span>
+<span class="normal"><a href="#__codelineno-2-47">47</a></span>
+<span class="normal"><a href="#__codelineno-2-48">48</a></span>
+<span class="normal"><a href="#__codelineno-2-49">49</a></span>
+<span class="normal"><a href="#__codelineno-2-50">50</a></span>
+<span class="normal"><a href="#__codelineno-2-51">51</a></span>
+<span class="normal"><a href="#__codelineno-2-52">52</a></span>
+<span class="normal"><a href="#__codelineno-2-53">53</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-2-45" name="__codelineno-2-45"></a><span class="nd">@overrides</span>
+<a id="__codelineno-2-46" name="__codelineno-2-46"></a><span class="k">def</span> <span class="nf">getApplicableReferenceNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-2-47" name="__codelineno-2-47"></a>    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;SERIAL&quot;</span><span class="p">]</span>
+<a id="__codelineno-2-48" name="__codelineno-2-48"></a>
+<a id="__codelineno-2-49" name="__codelineno-2-49"></a><span class="nd">@overrides</span>
+<a id="__codelineno-2-50" name="__codelineno-2-50"></a><span class="k">def</span> <span class="nf">visitReferenceRead</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">reference</span><span class="p">):</span>
+<a id="__codelineno-2-51" name="__codelineno-2-51"></a>    <span class="k">if</span> <span class="n">context</span><span class="o">.</span><span class="n">isMemberInSubClassOf</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="s2">&quot;android.os.Build&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-2-52" name="__codelineno-2-52"></a>        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Using </span><span class="se">\&quot;</span><span class="s2">SERIAL</span><span class="se">\&quot;</span><span class="s2"> to get device identifiers is not recommended&quot;</span>
+<a id="__codelineno-2-53" name="__codelineno-2-53"></a>        <span class="n">context</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ISSUE</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">reference</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="analyzing-xml-contents">Analyzing xml contents<a class="headerlink" href="#analyzing-xml-contents" title="Permanent link">#</a></h2>
+<p>When searching targets in xml files, one has to first specify the scope of applicable xml files with <code>getApplicableXmlFiles()</code> follows by <code>getApplicableElements()</code> or <code>getApplicableAttributes()</code> to locate target xml element/attribute. Their corresponding callbacks are <code>visitElement()</code> and <code>visitAttribute()</code> respectively.</p>
+<p>Below is an example detecting process that look into elements with tag name <code>application</code> within <code>AndroidManifest.xml</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">ManifestDetector.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-54">54</a></span>
+<span class="normal"><a href="#__codelineno-3-55">55</a></span>
+<span class="normal"><a href="#__codelineno-3-56">56</a></span>
+<span class="normal"><a href="#__codelineno-3-57">57</a></span>
+<span class="normal"><a href="#__codelineno-3-58">58</a></span>
+<span class="normal"><a href="#__codelineno-3-59">59</a></span>
+<span class="normal"><a href="#__codelineno-3-60">60</a></span>
+<span class="normal"><a href="#__codelineno-3-61">61</a></span>
+<span class="normal"><a href="#__codelineno-3-62">62</a></span>
+<span class="normal"><a href="#__codelineno-3-63">63</a></span>
+<span class="normal"><a href="#__codelineno-3-64">64</a></span>
+<span class="normal"><a href="#__codelineno-3-65">65</a></span>
+<span class="normal"><a href="#__codelineno-3-66">66</a></span>
+<span class="normal"><a href="#__codelineno-3-67">67</a></span>
+<span class="normal"><a href="#__codelineno-3-68">68</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-3-54" name="__codelineno-3-54"></a><span class="nd">@overrides</span>
+<a id="__codelineno-3-55" name="__codelineno-3-55"></a><span class="k">def</span> <span class="nf">getApplicableXmlFiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-56" name="__codelineno-3-56"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">Scope</span><span class="o">.</span><span class="n">MANIFEST</span><span class="p">]</span>
+<a id="__codelineno-3-57" name="__codelineno-3-57"></a>
+<a id="__codelineno-3-58" name="__codelineno-3-58"></a><span class="nd">@overrides</span>
+<a id="__codelineno-3-59" name="__codelineno-3-59"></a><span class="k">def</span> <span class="nf">getApplicableElements</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-3-60" name="__codelineno-3-60"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">TAG_APPLICATION</span><span class="p">]</span>
+<a id="__codelineno-3-61" name="__codelineno-3-61"></a>
+<a id="__codelineno-3-62" name="__codelineno-3-62"></a><span class="nd">@overrides</span>
+<a id="__codelineno-3-63" name="__codelineno-3-63"></a><span class="k">def</span> <span class="nf">visitElement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+<a id="__codelineno-3-64" name="__codelineno-3-64"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">element</span><span class="o">.</span><span class="n">hasAttributeNS</span><span class="p">(</span><span class="n">ANDROID_URI</span><span class="p">,</span> <span class="n">ATTR_ALLOW_BACKUP</span><span class="p">)</span> <span class="ow">and</span> <span class="n">context</span><span class="o">.</span><span class="n">minSdk</span> <span class="o">&gt;=</span> <span class="mi">4</span><span class="p">:</span>
+<a id="__codelineno-3-65" name="__codelineno-3-65"></a>        <span class="n">context</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ALLOW_BACKUP</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">element</span><span class="o">.</span><span class="n">location</span><span class="p">,</span>
+<a id="__codelineno-3-66" name="__codelineno-3-66"></a>            <span class="s2">&quot;Should explicitly set `android:allowBackup` to `true` or &quot;</span> <span class="o">+</span>
+<a id="__codelineno-3-67" name="__codelineno-3-67"></a>            <span class="s2">&quot;`false` (it&#39;s `true` by default, and that can have some security &quot;</span> <span class="o">+</span>
+<a id="__codelineno-3-68" name="__codelineno-3-68"></a>            <span class="s2">&quot;implications for the application&#39;s data)&quot;</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="analyzing-resource-arsc-contents">Analyzing resource (ARSC) contents<a class="headerlink" href="#analyzing-resource-arsc-contents" title="Permanent link">#</a></h2>
+<p>It is a little different when it comes to accessing ARSC content as there is only ever going to be single one ARSC file in an Apk. As a result, a Detector only has to implement <code>checkResource()</code> callback to receive the APSCParser Object(an androguard object).</p>
+<p>Following is an example showing how we can operate on ARSC as well as implement multiple types of ScannerInterfaces at the same time, which is the very case where the Detector have to specifically further inform the RuleManager their evaluating order with <code>getImplementationSequence()</code>.</p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">LocaleFolderDetector.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-28">28</a></span>
+<span class="normal"><a href="#__codelineno-4-29">29</a></span>
+<span class="normal"><a href="#__codelineno-4-30">30</a></span>
+<span class="normal"><a href="#__codelineno-4-31">31</a></span>
+<span class="normal"><a href="#__codelineno-4-32">32</a></span>
+<span class="normal"><a href="#__codelineno-4-33">33</a></span>
+<span class="normal"><a href="#__codelineno-4-34">34</a></span>
+<span class="normal"><a href="#__codelineno-4-35">35</a></span>
+<span class="normal"><a href="#__codelineno-4-36">36</a></span>
+<span class="normal"><a href="#__codelineno-4-37">37</a></span>
+<span class="normal"><a href="#__codelineno-4-38">38</a></span>
+<span class="normal"><a href="#__codelineno-4-39">39</a></span>
+<span class="normal"><a href="#__codelineno-4-40">40</a></span>
+<span class="normal"><a href="#__codelineno-4-41">41</a></span>
+<span class="normal"><a href="#__codelineno-4-42">42</a></span>
+<span class="normal"><a href="#__codelineno-4-43">43</a></span>
+<span class="normal"><a href="#__codelineno-4-44">44</a></span>
+<span class="normal"><a href="#__codelineno-4-45">45</a></span>
+<span class="normal"><a href="#__codelineno-4-46">46</a></span>
+<span class="normal"><a href="#__codelineno-4-47">47</a></span>
+<span class="normal"><a href="#__codelineno-4-48">48</a></span>
+<span class="normal"><a href="#__codelineno-4-49">49</a></span>
+<span class="normal"><a href="#__codelineno-4-50">50</a></span>
+<span class="normal"><a href="#__codelineno-4-51">51</a></span>
+<span class="normal"><a href="#__codelineno-4-52">52</a></span>
+<span class="normal"><a href="#__codelineno-4-53">53</a></span>
+<span class="normal"><a href="#__codelineno-4-54">54</a></span>
+<span class="normal"><a href="#__codelineno-4-55">55</a></span>
+<span class="normal"><a href="#__codelineno-4-56">56</a></span>
+<span class="normal"><a href="#__codelineno-4-57">57</a></span>
+<span class="normal"><a href="#__codelineno-4-58">58</a></span>
+<span class="normal"><a href="#__codelineno-4-59">59</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-4-28" name="__codelineno-4-28"></a><span class="nd">@overrides</span>
+<a id="__codelineno-4-29" name="__codelineno-4-29"></a><span class="k">def</span> <span class="nf">getImplementationSequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-4-30" name="__codelineno-4-30"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">ResourcesScanner</span><span class="p">,</span> <span class="n">JavaScanner</span><span class="p">]</span>
+<a id="__codelineno-4-31" name="__codelineno-4-31"></a>
+<a id="__codelineno-4-32" name="__codelineno-4-32"></a><span class="nd">@overrides</span>
+<a id="__codelineno-4-33" name="__codelineno-4-33"></a><span class="k">def</span> <span class="nf">checkResource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">resource</span><span class="p">):</span>
+<a id="__codelineno-4-34" name="__codelineno-4-34"></a>    <span class="n">pkgs</span> <span class="o">=</span> <span class="n">resource</span><span class="o">.</span><span class="n">get_packages_names</span><span class="p">()</span>
+<a id="__codelineno-4-35" name="__codelineno-4-35"></a>    <span class="n">locales</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<a id="__codelineno-4-36" name="__codelineno-4-36"></a>    <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">pkgs</span><span class="p">:</span>
+<a id="__codelineno-4-37" name="__codelineno-4-37"></a>        <span class="n">locales</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">resource</span><span class="o">.</span><span class="n">get_locales</span><span class="p">(</span><span class="n">pkg</span><span class="p">)))</span>
+<a id="__codelineno-4-38" name="__codelineno-4-38"></a>
+<a id="__codelineno-4-39" name="__codelineno-4-39"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">threeLetterLocales</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+<a id="__codelineno-4-40" name="__codelineno-4-40"></a>    <span class="k">for</span> <span class="n">locale</span> <span class="ow">in</span> <span class="n">locales</span><span class="p">:</span>
+<a id="__codelineno-4-41" name="__codelineno-4-41"></a>        <span class="n">language</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-4-42" name="__codelineno-4-42"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">language</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">:</span>
+<a id="__codelineno-4-43" name="__codelineno-4-43"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">threeLetterLocales</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">language</span><span class="p">)</span>
+<a id="__codelineno-4-44" name="__codelineno-4-44"></a>
+<a id="__codelineno-4-45" name="__codelineno-4-45"></a><span class="nd">@overrides</span>
+<a id="__codelineno-4-46" name="__codelineno-4-46"></a><span class="k">def</span> <span class="nf">getApplicableMethodNames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-4-47" name="__codelineno-4-47"></a>    <span class="k">return</span> <span class="p">[</span><span class="s2">&quot;getLocales&quot;</span><span class="p">]</span>
+<a id="__codelineno-4-48" name="__codelineno-4-48"></a>
+<a id="__codelineno-4-49" name="__codelineno-4-49"></a><span class="nd">@overrides</span>
+<a id="__codelineno-4-50" name="__codelineno-4-50"></a><span class="k">def</span> <span class="nf">visitMethodCall</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+<a id="__codelineno-4-51" name="__codelineno-4-51"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">threeLetterLocales</span> <span class="ow">or</span> <span class="n">context</span><span class="o">.</span><span class="n">getMinSdk</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">21</span><span class="p">:</span>
+<a id="__codelineno-4-52" name="__codelineno-4-52"></a>        <span class="k">return</span>
+<a id="__codelineno-4-53" name="__codelineno-4-53"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">context</span><span class="o">.</span><span class="n">isMemberInSubClassOf</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="s2">&quot;android.content.res.AssetManager&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+<a id="__codelineno-4-54" name="__codelineno-4-54"></a>        <span class="k">return</span>
+<a id="__codelineno-4-55" name="__codelineno-4-55"></a>    <span class="n">locales</span> <span class="o">=</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threeLetterLocales</span><span class="p">))</span>
+<a id="__codelineno-4-56" name="__codelineno-4-56"></a>    <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The app will crash on platforms older than v21 &quot;</span> <span class="o">+</span>\
+<a id="__codelineno-4-57" name="__codelineno-4-57"></a>        <span class="sa">f</span><span class="s2">&quot;(minSdkVersion is </span><span class="si">{</span><span class="n">context</span><span class="o">.</span><span class="n">getMinSdk</span><span class="p">()</span><span class="si">}</span><span class="s2">) because `AssetManager#getLocales` is called and it &quot;</span> <span class="o">+</span>\
+<a id="__codelineno-4-58" name="__codelineno-4-58"></a>        <span class="sa">f</span><span class="s2">&quot;contains one or more v21-style (3-letter or BCP47 locale) locales: </span><span class="si">{</span><span class="n">locales</span><span class="si">}</span><span class="s2">&quot;</span>
+<a id="__codelineno-4-59" name="__codelineno-4-59"></a>    <span class="n">context</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ISSUE</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span> <span class="n">method</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+<h2 id="analyzing-other-files-contents">Analyzing Other Files contents<a class="headerlink" href="#analyzing-other-files-contents" title="Permanent link">#</a></h2>
+<p>BLINK also provide a ScannerInterface for other untypical files that may exist in an Apk. For these kind of files, one can provide the scope of target files with <code>getApplicableFiles()</code>, file names with <code>appliesTo()</code>, and their callback would be <code>visitFile()</code>.</p>
+<p>Scope Enum
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">issue.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-59">59</a></span>
+<span class="normal"><a href="#__codelineno-5-60">60</a></span>
+<span class="normal"><a href="#__codelineno-5-61">61</a></span>
+<span class="normal"><a href="#__codelineno-5-62">62</a></span>
+<span class="normal"><a href="#__codelineno-5-63">63</a></span>
+<span class="normal"><a href="#__codelineno-5-64">64</a></span>
+<span class="normal"><a href="#__codelineno-5-65">65</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-5-59" name="__codelineno-5-59"></a><span class="k">class</span> <span class="nc">Scope</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+<a id="__codelineno-5-60" name="__codelineno-5-60"></a>    <span class="sd">&quot;&quot;&quot;</span>
+<a id="__codelineno-5-61" name="__codelineno-5-61"></a><span class="sd">    file scopes</span>
+<a id="__codelineno-5-62" name="__codelineno-5-62"></a><span class="sd">    &quot;&quot;&quot;</span>
+<a id="__codelineno-5-63" name="__codelineno-5-63"></a>    <span class="n">OTHER</span> <span class="o">=</span> <span class="mb">0b1</span>
+<a id="__codelineno-5-64" name="__codelineno-5-64"></a>    <span class="n">ALL_RESOURCE_FILES</span> <span class="o">=</span> <span class="mb">0b10</span>  <span class="c1"># res/...xml</span>
+<a id="__codelineno-5-65" name="__codelineno-5-65"></a>    <span class="n">MANIFEST</span> <span class="o">=</span> <span class="mb">0b100</span>  <span class="c1"># AndroidManifest.xml</span>
+</code></pre></div></td></tr></table></div></p>
+<p>Following is an example where we are checking if there are potential private key files got packed into an Apk, which is often undesirable. </p>
+<div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">PrivateKeyDetector.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-23">23</a></span>
+<span class="normal"><a href="#__codelineno-6-24">24</a></span>
+<span class="normal"><a href="#__codelineno-6-25">25</a></span>
+<span class="normal"><a href="#__codelineno-6-26">26</a></span>
+<span class="normal"><a href="#__codelineno-6-27">27</a></span>
+<span class="normal"><a href="#__codelineno-6-28">28</a></span>
+<span class="normal"><a href="#__codelineno-6-29">29</a></span>
+<span class="normal"><a href="#__codelineno-6-30">30</a></span>
+<span class="normal"><a href="#__codelineno-6-31">31</a></span>
+<span class="normal"><a href="#__codelineno-6-32">32</a></span>
+<span class="normal"><a href="#__codelineno-6-33">33</a></span>
+<span class="normal"><a href="#__codelineno-6-34">34</a></span>
+<span class="normal"><a href="#__codelineno-6-35">35</a></span>
+<span class="normal"><a href="#__codelineno-6-36">36</a></span>
+<span class="normal"><a href="#__codelineno-6-37">37</a></span>
+<span class="normal"><a href="#__codelineno-6-38">38</a></span>
+<span class="normal"><a href="#__codelineno-6-39">39</a></span>
+<span class="normal"><a href="#__codelineno-6-40">40</a></span>
+<span class="normal"><a href="#__codelineno-6-41">41</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-6-23" name="__codelineno-6-23"></a><span class="nd">@overrides</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24"></a><span class="k">def</span> <span class="nf">getApplicableFiles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">Scope</span><span class="o">.</span><span class="n">OTHER</span><span class="p">]</span>
+<a id="__codelineno-6-26" name="__codelineno-6-26"></a>
+<a id="__codelineno-6-27" name="__codelineno-6-27"></a><span class="nd">@overrides</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28"></a><span class="k">def</span> <span class="nf">visitFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">,</span> <span class="n">File</span><span class="p">):</span>
+<a id="__codelineno-6-29" name="__codelineno-6-29"></a>    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">isPrivateKeyFile</span><span class="p">(</span><span class="n">File</span><span class="p">):</span>
+<a id="__codelineno-6-30" name="__codelineno-6-30"></a>        <span class="n">message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;The &#39;</span><span class="si">{</span><span class="n">File</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&#39; file seems to be a private key file. &quot;</span> <span class="o">+</span> \
+<a id="__codelineno-6-31" name="__codelineno-6-31"></a>            <span class="sa">f</span><span class="s2">&quot;Please make sure not to embed this in your APK file.&quot;</span>
+<a id="__codelineno-6-32" name="__codelineno-6-32"></a>        <span class="n">context</span><span class="o">.</span><span class="n">report</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ISSUE</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="n">File</span><span class="o">.</span><span class="n">location</span><span class="p">,</span> <span class="n">message</span><span class="p">)</span>
+<a id="__codelineno-6-33" name="__codelineno-6-33"></a>
+<a id="__codelineno-6-34" name="__codelineno-6-34"></a><span class="k">def</span> <span class="nf">isPrivateKeyFile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">File</span><span class="p">):</span>
+<a id="__codelineno-6-35" name="__codelineno-6-35"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">File</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;pem&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">File</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;key&quot;</span><span class="p">):</span>
+<a id="__codelineno-6-36" name="__codelineno-6-36"></a>        <span class="k">return</span> <span class="kc">False</span>
+<a id="__codelineno-6-37" name="__codelineno-6-37"></a>    <span class="n">firstline</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">File</span><span class="o">.</span><span class="n">read_line</span><span class="p">())</span>
+<a id="__codelineno-6-38" name="__codelineno-6-38"></a>    <span class="k">if</span> <span class="n">firstline</span> <span class="ow">and</span> <span class="n">firstline</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;---&quot;</span><span class="p">)</span> <span class="ow">and</span>\
+<a id="__codelineno-6-39" name="__codelineno-6-39"></a>            <span class="p">(</span><span class="s2">&quot;PRIVATE KEY&quot;</span> <span class="ow">in</span> <span class="n">firstline</span><span class="p">):</span>
+<a id="__codelineno-6-40" name="__codelineno-6-40"></a>        <span class="k">return</span> <span class="kc">True</span>
+<a id="__codelineno-6-41" name="__codelineno-6-41"></a>    <span class="k">return</span> <span class="kc">False</span>
+</code></pre></div></td></tr></table></div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../detector/" class="btn btn-neutral float-left" title="Detector"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../detector/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

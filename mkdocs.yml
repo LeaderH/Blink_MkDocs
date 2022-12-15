@@ -9,6 +9,7 @@ nav:
         - Apkinfo: apkinfo.md
         - Scanner: scanner.md
         - Detector: detector.md
+        - Analysis Scenarios: samples.md
 theme: readthedocs
 
 markdown_extensions:

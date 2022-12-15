@@ -1,4 +1,4 @@
-# Apkinfo
+# Apkinfo MetaObject
 Apkinfo is the core object of an instance of analysis on single target APK; it not only is in charge of manipulating all the communication between test rules defined in the evaluation module and fundamental elements gathered in the previous decompile module, but also has to collect and produce final reports.
 
 |category|sample methods|info|

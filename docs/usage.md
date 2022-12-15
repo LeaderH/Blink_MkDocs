@@ -41,6 +41,10 @@ Options:
   --help                       Show this message and exit.
 ```
 
+The prediction function is base on a ML model trained from CICMalDroid2020 dataset with about 8k labeled and balanced Riskware and Benign applications . 
+The model went through 10 fold crossvalidation and achieving auc score of 0.9959.
+
+![img](img/prediction%20model%20pipeline.png "Prediction model pipeline")
 
 
 ## Rule Management

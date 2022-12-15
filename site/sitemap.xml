@@ -21,6 +21,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://docs.blink.com/samples/</loc>
+         <lastmod>2022-12-15</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://docs.blink.com/scanner/</loc>
          <lastmod>2022-12-15</lastmod>
          <changefreq>daily</changefreq>
