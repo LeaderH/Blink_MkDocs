@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.blink.com/usage/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Usage - BLINK</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Usage";
+        var mkdocs_page_input_path = "usage.md";
+        var mkdocs_page_url = "/usage/";
+      </script>
+    
+    <script src="../js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> BLINK
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Home</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" href="..">About</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="./">Usage</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#command-line-entry-point">Command Line Entry point</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#rule-management">Rule Management</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#report-format">Report format</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#result-single-apk">Result (single apk)</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#xml">xml</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#txt">txt</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#mongodb-document">mongoDB document</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#result-multiple-apk">Result (multiple apk)</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#csv">csv</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#database-lookup">Database lookup</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#output">Output</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#rule_detail">rule_detail</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#result">result</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#rule_result">rule_result</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#randomfileselector">RandomFileSelector</a>
+    </li>
+    </ul>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../apkinfo/">Apkinfo</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../scanner/">Scanner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../detector/">Detector</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">BLINK</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Home &raquo;</li>
+      <li>Usage</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">#</a></h1>
+<h2 id="command-line-entry-point">Command Line Entry point<a class="headerlink" href="#command-line-entry-point" title="Permanent link">#</a></h2>
+<hr />
+<p><code>blink.cli</code><br />
+Entry point for an analysis task, one can specify input target APKs and ruleset directory, output types, format, and several analysis parameters.</p>
+<p><strong>Example usage:</strong></p>
+<p><code>python -m blink.cli -i sample.apk -o csv -o txt -s -t -db -T test</code></p>
+<ul>
+<li>output csv, txt and show to console</li>
+<li>time the analysis critical steps</li>
+<li>store result in database</li>
+<li>assign a tag to mark this analysis run</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Usage: python -m blink.cli [OPTIONS]
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  Blink: Andoird binary lint kit
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>Options:
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  -i, --input PATH                input APK File/ Folder(single layer)
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>                                  [required]
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  -d, --outdir DIRECTORY          Analysis Report Output Directory
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  -o, --output-type [txt|xml|csv]
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>                                  Output file type
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  -r, --rules DIRECTORY           Rules folder need to be checked
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>  -s, --show                      Show result to console
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>  -v, --verbose                   Show detailed result(imply show)
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>  -db, --database              Store result to database(need to set db_config)
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>  -T, --analyze-tag TEXT       Analysis tag mark this round of analysis(also
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>                               used as output dirname)
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>  -t, --timed                  Time critical steps
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>  -p, --prediction             Riskware Predicton(CICMalDroid2020)
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>  -seq, --sequential           Analyze target sequentially (disable
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>                               multiprocessing)
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>  --timeout INTEGER            Timeout value (in sec)
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>  -n, --process-cnt INTEGER    Mutiprocess core count
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  --version
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  --help                       Show this message and exit.
+</code></pre></div>
+<h2 id="rule-management">Rule Management<a class="headerlink" href="#rule-management" title="Permanent link">#</a></h2>
+<hr />
+<p><code>blink.config</code><br />
+Manage availabilities of rules(Detectors) in a ruleset, support regular expression syntax.</p>
+<p><strong>Example usage:</strong></p>
+<p><code>python -m blink.config -e "Allow*" blink/Rules</code></p>
+<ul>
+<li>eable rule with regex wildcard</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Usage: python -m blink.config [OPTIONS] [RULE_DIR]
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  If Enable/Disable all is set, single operations will be ignored Operation
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>  order: enable -&gt; disable
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>  :param [RULE_DIR]: default to &#39;blink/Rules&#39;
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Options:
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>  -e, --enable TEXT   Enable rule with name match regular expression
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>  -d, --disable TEXT  Disable rule with name match regular expression
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>  -l, --show          [main op] List/Show rules
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>  -ea                 [main op] Enable all
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>  -da                 [main op] Disable all
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>  --help              Show this message and exit.
+</code></pre></div>
+<h2 id="report-format">Report format<a class="headerlink" href="#report-format" title="Permanent link">#</a></h2>
+<hr />
+<h3 id="result-single-apk">Result (single apk)<a class="headerlink" href="#result-single-apk" title="Permanent link">#</a></h3>
+<h4 id="xml">xml<a class="headerlink" href="#xml" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>&lt;analysis target=&quot;lintTest1.apk&quot; total=&quot;78&quot;&gt;
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    &lt;report rule_file=&quot;C2dmDetector&quot; count=&quot;1&quot; target=&quot;lintTest1.apk&quot;&gt;
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        &lt;issue id=&quot;UsingC2DM&quot;...&gt;
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>            &lt;instance location=&quot;...&quot; message=&quot;...&quot;/&gt;
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>        &lt;/issue&gt;
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    &lt;/report&gt;
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>&lt;/analysis&gt; 
+</code></pre></div>
+<h4 id="txt">txt<a class="headerlink" href="#txt" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>[C2dmDetector] - 1
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    &gt; UsingC2DM: 1
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>        - AndroidManifest.xml@4-&gt;android:name
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>        * The C2DM library does not work on Android P or newer devices; you should migrate to Firebase Cloud Messaging to ensure reliable message delivery
+</code></pre></div>
+<h4 id="mongodb-document">mongoDB document<a class="headerlink" href="#mongodb-document" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    _id:62e21496af32c00c62d3107e,
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    _AnalysisTag:&quot;072822_124550&quot;,
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    _APK:&quot;com.blink.test.minApi16.debug&quot;,
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    _VersionCode:&quot;1&quot;,
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    _MD5:&quot;5b30bf0f130b5dff7cfd59c553612f33&quot;,
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    AcceptsUserCertificates:1,
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    AddJavascriptInterface:11,
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    AllowAllHostnameVerifier:2,
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    AllowBackup:0,
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    AuthLeak:1,
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    ...
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>}
+</code></pre></div>
+<h3 id="result-multiple-apk">Result (multiple apk)<a class="headerlink" href="#result-multiple-apk" title="Permanent link">#</a></h3>
+<h4 id="csv">csv<a class="headerlink" href="#csv" title="Permanent link">#</a></h4>
+<table>
+<thead>
+<tr>
+<th align="left">_APK</th>
+<th align="left">_VersionCode</th>
+<th align="left">_MD5</th>
+<th align="left">AcceptsUserCertificates</th>
+<th align="left">AddJavascriptInterface</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">xxx.apk</td>
+<td align="left">1.0</td>
+<td align="left">xxxx</td>
+<td align="left">0</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">yyy.apk</td>
+<td align="left">1.3</td>
+<td align="left">xxxx</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+<tr>
+<td align="left">zzz.apk</td>
+<td align="left">2.0</td>
+<td align="left">xxxx</td>
+<td align="left">1</td>
+<td align="left">0</td>
+</tr>
+</tbody>
+</table>
+<h2 id="database-lookup">Database lookup<a class="headerlink" href="#database-lookup" title="Permanent link">#</a></h2>
+<hr />
+<p><code>blink.db_lookup</code><br />
+Auxiliary functions interacting with BLINK's results stored with mongoDB.</p>
+<p><strong>Example usage:</strong></p>
+<p><code>python -m blink.db_lookup rule_detail -i AllowBackup</code>
+- lookup details about a rule</p>
+<p><code>python -m blink.db_lookup result -i sample.apk -T tag</code>
+- lookup result of a apk 
+- provide analyze_tag to filter result of specific run</p>
+<p><code>python -m blink.db_lookup rule_result -i AllowBackup</code>
+- lookup apks that triggered a specific rule</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>Usage: python -m blink.db_lookup [OPTIONS] {rule_detail|result|rule_result}
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  Manipulate MongoDB results
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>Options:
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  -i, --identity TEXT     Rule Id or packageName
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>  -T, --analyze-tag TEXT  Analysis tag mark this round of analysis
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>  --apk-md5 TEXT          APK&#39;s md5
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>  --help                  Show this message and exit.
+</code></pre></div>
+<h3 id="output">Output<a class="headerlink" href="#output" title="Permanent link">#</a></h3>
+<h4 id="rule_detail">rule_detail<a class="headerlink" href="#rule_detail" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>ID: AllowBackup
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>Category: SECURITY
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>Severity: WARNING
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>Priority: 3
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>Description: The allowBackup attribute determines if an application&#39;s data can be backed up and restored. It is documented at http://developer.android.com/reference/android/R.attr.html#allowBackup 
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>...
+</code></pre></div>
+<h4 id="result">result<a class="headerlink" href="#result" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>PackageName: com.blink.test.minApi16.debug
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>VesionCode: 1
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>MD5: 5b30bf0f130b5dff7cfd59c553612f33
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>AnalyzeTag: 072822_124550
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        [AcceptsUserCertificates]: 1
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        [AddJavascriptInterface]: 11
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>        [AllowAllHostnameVerifier]: 2
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        ...
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>        [WorldWriteableFiles]: 0
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>Appearence: 22, Total: 79
+</code></pre></div>
+<h4 id="rule_result">rule_result<a class="headerlink" href="#rule_result" title="Permanent link">#</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>RuleID [AllowBackup]
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>&lt;Tag: 072822_122556&gt;
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>at.tacticaldevc.panictrigger: 1
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>com.pierreduchemin.smsforward: 1
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>com.saverio.pdfviewer: 1
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>com.wesaphzt.privatelocation: 1
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>de.chagemann.regexcrossword: 1
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>nl.patrickkostjens.kandroid: 1
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>org.mozilla.klar: 1
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>sh.ftp.rocketninelabs.meditationassistant.opensource: 1
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>Appearence: 8, Total: 8
+</code></pre></div>
+<h2 id="randomfileselector">RandomFileSelector<a class="headerlink" href="#randomfileselector" title="Permanent link">#</a></h2>
+<hr />
+<p><code>blink.Util.RandomFileSelector</code><br />
+Auxiliary fuction for randomly select given number of target files and rename them.</p>
+<p><strong>Example usage:</strong></p>
+<p><code>python -m blink.Util.RandomFileSelector -f DataSet/ -o Samples/ -n 10 -r --prefix case</code>
+- randomly pick 10 test case from /DataSet to /Samples and rename as case[\d]
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Usage: python -m blink.Util.RandomFileSelector [OPTIONS]
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>  Randomly chose and copy files in a folder.
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>Options:
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>  -f, --folder DIRECTORY  Target folder  [required]
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>  -o, --output DIRECTORY  Output folder  [required]
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>  -n, --number INTEGER    Amount  [required]
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>  --prefix TEXT           Rename copied file with prefix  [default: case]
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>  -r, --rename            Rename copied file
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>  --help                  Show this message and exit.
+</code></pre></div></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../installation/" class="btn btn-neutral float-left" title="Installation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../apkinfo/" class="btn btn-neutral float-right" title="Apkinfo">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../installation/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../apkinfo/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

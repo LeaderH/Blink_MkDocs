@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://docs.blink.com/" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>About - BLINK</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "About";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = "/";
+      </script>
+    
+    <script src="js/jquery-3.6.0.min.js" defer></script>
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+      <script>hljs.initHighlightingOnLoad();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> BLINK
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption"><span class="caption-text">Home</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" href=".">About</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#blink-workflow">BLINK workflow</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#decompiling-module">Decompiling module</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#analyzing-module">Analyzing module</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="installation/">Installation</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="usage/">Usage</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">API</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="apkinfo/">Apkinfo</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="scanner/">Scanner</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="detector/">Detector</a>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">BLINK</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" alt="Docs"></a> &raquo;</li>
+          <li>Home &raquo;</li>
+      <li>About</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="welcome-to-blinks-documentation">Welcome to BLINK's documentation<a class="headerlink" href="#welcome-to-blinks-documentation" title="Permanent link">#</a></h1>
+<p>BLINK (Binary LINt Kit) is an Android quality/vunlnerability assessment framework.<br />
+It supports various Android application analyzing workflows without the need for application's source code - that is, BLINK directly takes APKs as input.<br />
+To ensure a stable source of detecting rules and examples, BLINK also boosts similar rule definition style of that from <a href="https://developer.android.com/studio/write/lint">Android Lint</a>, an official Android source code linter.  </p>
+<p>You can kown more about BLINK with how to <a href="installation/">install</a> and <a href="usage/">manipulate</a>.</p>
+<h3 id="blink-workflow">BLINK workflow<a class="headerlink" href="#blink-workflow" title="Permanent link">#</a></h3>
+<p>BLINK consists of two major processing modules, a metaobject(Apkinfo), and numerous customizable detecting rules(Detectors).</p>
+<p><img alt="img" src="img/BLINK_workflow.png" title="BLINK workflow" /></p>
+<h4 id="decompiling-module">Decompiling module<a class="headerlink" href="#decompiling-module" title="Permanent link">#</a></h4>
+<p>Leveraging slightly modified <a href="https://github.com/androguard/androguard">Androgurad</a> core, BLINK decompiles and extracts every interesting resources within an APK and maps each resource into individual python objects.<br />
+BLINK also further analyze and maintain every caller-callee, field read-field write relationships with cross reference entries, which is crucial for later needs of dataflow analysis.  </p>
+<p><img alt="img" src="img/Decompile%20module%20overview.png" title="Decompiling module" /></p>
+<h4 id="analyzing-module">Analyzing module<a class="headerlink" href="#analyzing-module" title="Permanent link">#</a></h4>
+<p>A RuleManager is responsible for govening the availability of the Detectors as well as loading them in order into analyzing module.<br />
+Detectors access resource or information in target APK via implementing corresponding ScannerInterfaces.<br />
+By following Request, Callback, Report design patterns, BLINK can accommodate various workflow without any risk of confliction.</p>
+<p><img alt="img" src="img/Analyzing%20Module%20overview.png" title="Analyzing module" /></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="installation/" class="btn btn-neutral float-right" title="Installation">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+      <span><a href="installation/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme_extra.js" defer></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
