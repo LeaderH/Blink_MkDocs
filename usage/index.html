@@ -99,6 +99,8 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../detector/">Detector</a>
                   </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../samples/">Analysis Scenarios</a>
+                  </li>
               </ul>
       </div>
     </div>
@@ -162,6 +164,9 @@ Entry point for an analysis task, one can specify input target APKs and ruleset 
 <a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>  --version
 <a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>  --help                       Show this message and exit.
 </code></pre></div>
+<p>The prediction function is base on a ML model trained from CICMalDroid2020 dataset with about 8k labeled and balanced Riskware and Benign applications . 
+The model went through 10 fold crossvalidation and achieving auc score of 0.9959.</p>
+<p><img alt="img" src="../img/prediction%20model%20pipeline.png" title="Prediction model pipeline" /></p>
 <h2 id="rule-management">Rule Management<a class="headerlink" href="#rule-management" title="Permanent link">#</a></h2>
 <hr />
 <p><code>blink.config</code><br />
